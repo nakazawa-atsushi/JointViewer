@@ -57,18 +57,15 @@ class HandViewer(ShowBase):
         self.maxframe = 0
         self.d_frame = 1
         self.ost = OnscreenText(text="", pos=(-1.0, 0.95), scale=0.07)
-
-        # link for bones (Hand model)
-        self.links = [['Thumb1', 'Thumb2', 'Thumb3', 'ThumbTip'],
-            ['Index1', 'Index2', 'Index3', 'IndexTip'],
-            ['Middle1', 'Middle2', 'Middle3', 'MiddleTip'],
-            ['Ring1', 'Ring2', 'Ring3', 'RingTip'],
-            ['Pinky1', 'Pinky2', 'Pinky3', 'PinkyTip'],
-            ['ForearmStub', 'Thumb0', 'Thumb1'],
-            ['ForearmStub', 'Pinky0']]
         
+        # set default links
+        self.links = []
+
         # keyboard functions
         self.accept('space', self.pause)
+
+    def setlinks(self, links):
+        self.links = links
 
     def pause(self):
         if self.d_frame == 1:
@@ -190,8 +187,22 @@ class HandViewer(ShowBase):
                 self.data[self.jnames[0]+'.y'][0],
                 self.data[self.jnames[0]+'.z'][0])
 
-# データファイルを読む
-FILE = 'HandBonePosition.csv'
-app = HandViewer()
-app.loaddata(FILE)
-app.run()
+
+
+if __name__ == '__main__':
+    # データファイルを読む
+    FILE = 'HandBonePosition.csv'
+    # link for bones (Hand model)
+    links = [['Thumb1', 'Thumb2', 'Thumb3', 'ThumbTip'],
+        ['Index1', 'Index2', 'Index3', 'IndexTip'],
+        ['Middle1', 'Middle2', 'Middle3', 'MiddleTip'],
+        ['Ring1', 'Ring2', 'Ring3', 'RingTip'],
+        ['Pinky1', 'Pinky2', 'Pinky3', 'PinkyTip'],
+        ['ForearmStub', 'Thumb0', 'Thumb1'],
+        ['ForearmStub', 'Pinky0']]
+
+    app = HandViewer()
+    app.setlinks(links)
+
+    app.loaddata(FILE)
+    app.run()
